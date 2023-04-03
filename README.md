@@ -1,4 +1,4 @@
-# My [CV](https://vladinski.md/resume)
+# My [CV](https://vladcuciureanu.com/resume)
 
 Built using [Awesome CV](https://github.com/posquit0/Awesome-CV). All credit goes to [Byungjin Park](https://github.com/posquit0).
 
@@ -8,4 +8,4 @@ When installed, you can run:
 
 `xelatex cv.tex`
 
-This will create a file named `cv.pdf` which can be seen live [here](https://vladinski.md/resume).
+This will create a file named `cv.pdf` which can be seen live [here](https://vladcuciureanu.com/resume).
