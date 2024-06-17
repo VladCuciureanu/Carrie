@@ -1,9 +1,4 @@
-<div align="center">
-  <div>&nbsp;</div>
-  <img src="assets/cv-logo.png" width="400"/> 
-</div>
-
-## Introduction
+# 📜 Curriculum Vitae
 
 Welcome to my resume's LaTeX source code repository. This project is built using the stylish [Awesome CV](https://github.com/posquit0/Awesome-CV) template, created by [Byungjin Park](https://github.com/posquit0).
 
