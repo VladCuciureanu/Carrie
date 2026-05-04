@@ -1,106 +1,212 @@
-%!TEX TS-program = xelatex
-%!TEX encoding = UTF-8 Unicode
-% Awesome CV LaTeX Template for CV/Resume
-%
-% This template has been downloaded from:
-% https://github.com/posquit0/Awesome-CV
-%
-% Author:
-% Claud D. Park <posquit0.bj@gmail.com>
-% http://www.posquit0.com
-%
-% Template license:
-% CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)
-%
+% !TEX program = xelatex
+\documentclass[letterpaper]{article}
 
+% ── Geometry ──────────────────────────────────────────────────────────────────
+\usepackage[
+  letterpaper,
+  left=35.5bp,
+  top=41bp,
+  right=26.8bp,
+  bottom=40bp,
+]{geometry}
 
-%-------------------------------------------------------------------------------
-% CONFIGURATIONS
-%-------------------------------------------------------------------------------
-% A4 paper size by default, use 'letterpaper' for US letter
-\documentclass[11pt, a4paper]{awesome-cv}
+% ── Fonts ─────────────────────────────────────────────────────────────────────
+\usepackage{fontspec}
+\setmainfont{Inter}[
+  RawFeature=+cv11,          % single-story "a"
+  UprightFont=*-Regular,
+  BoldFont=*-SemiBold,        % one step down from Bold
+  ItalicFont=*-Italic,
+  BoldItalicFont=*-SemiBoldItalic,
+]
 
-% Configure page margins with geometry
-\geometry{left=1.4cm, top=.8cm, right=1.4cm, bottom=1.8cm, footskip=.5cm}
+% ── Packages ──────────────────────────────────────────────────────────────────
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{paracol}
+\usepackage{microtype}
 
-% Specify the location of the included fonts
-\fontdir[fonts/]
+% ── Colors ────────────────────────────────────────────────────────────────────
+\definecolor{accent}{RGB}{217,119,87}      % #D97757
+\definecolor{heading}{RGB}{28,25,23}       % #1C1917 – stone-900
+\definecolor{body}{RGB}{68,64,60}          % #44403C – stone-700
+\definecolor{muted}{RGB}{120,113,108}      % #78716C – stone-500
 
-% Color for highlights
-% Awesome Colors: awesome-emerald, awesome-skyblue, awesome-red, awesome-pink, awesome-orange
-%                 awesome-nephritis, awesome-concrete, awesome-darknight
-\colorlet{awesome}{awesome}
-% Uncomment if you would like to specify your own color
-% \definecolor{awesome}{HTML}{000000}
-% Colors for text
-% Uncomment if you would like to specify your own color
-% \definecolor{darktext}{HTML}{414141}
-% \definecolor{text}{HTML}{333333}
-% \definecolor{graytext}{HTML}{5D5D5D}
-% \definecolor{lighttext}{HTML}{999999}
-% Set false if you don't want to highlight section with awesome color
-\setbool{acvSectionColorHighlight}{true}
+% ── Hyperref ──────────────────────────────────────────────────────────────────
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 0},
+}
 
-% If you would like to change the social information separator from a pipe (|) to something else
-\renewcommand{\acvHeaderSocialSep}{\quad\textbar\quad}
+% ── Dimensions ────────────────────────────────────────────────────────────────
+\newlength{\leftcolwidth}
+\newlength{\rightcolwidth}
+\newlength{\colgap}
+\newlength{\headergap}
+\newlength{\sidebarsectionsep}
+\newlength{\sidebarsubsectionsep}
+\newlength{\sidebarheadingsep}
+\newlength{\sidebarsubheadingsep}
+\newlength{\sectiontocontent}
+\newlength{\jobrolesep}
+\newlength{\roletodesc}
+\newlength{\bulletsep}
+\newlength{\jobseplen}
+\newlength{\projectseplen}
+\newlength{\projectdesc}
 
+\setlength{\colgap}{28.3bp}
+\setlength{\headergap}{22.5bp}
+\setlength{\sidebarsectionsep}{33.9bp}
+\setlength{\sidebarsubsectionsep}{10bp}
+\setlength{\sidebarheadingsep}{14bp}
+\setlength{\sidebarsubheadingsep}{4.5bp}
+\setlength{\sectiontocontent}{12bp}
+\setlength{\jobrolesep}{5.3bp}
+\setlength{\roletodesc}{7.5bp}
+\setlength{\bulletsep}{0.5bp} % design spec: 5.2bp; reduced to fit page
+\setlength{\jobseplen}{17.5bp}
+\setlength{\projectseplen}{15bp}
+\setlength{\projectdesc}{8.05bp} % 66% of \roletodesc
 
-%-------------------------------------------------------------------------------
-%	PERSONAL INFORMATION
-%	Comment any of the lines below if they are not required
-%-------------------------------------------------------------------------------
-% Available options: circle|rectangle,edge/noedge,left/right
-% \photo[rectangle,edge,right]{./examples/profile}
-\name{Vlad}{Cuciureanu}
-\position{Full-Stack Developer{\enskip\cdotp\enskip}EU Citizen}
+\setlength{\rightcolwidth}{165.8bp}
+\setlength{\leftcolwidth}{\dimexpr\textwidth-\colgap-\rightcolwidth\relax}
 
-\mobile{+40 (756) 035 450}
-\email{vlad@cuciureanu.net}
-\homepage{vlad.cuciureanu.net}
-\github{VladCuciureanu}
-\linkedin{VladCuciureanu}
-% \gitlab{gitlab-id}
-% \stackoverflow{SO-id}{SO-name}
-% \twitter{@twit}
-% \skype{skype-id}
-% \reddit{reddit-id}
-% \medium{madium-id}
-% \googlescholar{googlescholar-id}{name-to-display}
-%% \firstname and \lastname will be used
-% \googlescholar{googlescholar-id}{}
-% \extrainfo{extra informations}
+% ── Global type settings ─────────────────────────────────────────────────────
+\pagestyle{empty}
+\raggedbottom
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\topskip}{0pt}
+\color{body}
 
+% ── Custom commands ───────────────────────────────────────────────────────────
 
-%-------------------------------------------------------------------------------
+% Section header: semibold blue, 11pt
+\newcommand{\rsection}[1]{%
+  {\fontsize{11}{14}\selectfont\bfseries\color{accent}#1}%
+}
+
+% Right sidebar section header (uses \sidebarheadingsep after)
+\newcommand{\rsidebarsection}[1]{%
+  \rsection{#1}\par\nointerlineskip\vspace{\sidebarheadingsep}%
+}
+
+% Left column section header (uses \sectiontocontent after)
+\newcommand{\rleftsection}[1]{%
+  \rsection{#1}\par\nointerlineskip\vspace{\sectiontocontent}%
+}
+
+% Subsection header (right column): semibold dark, 9pt
+\newcommand{\rsubsection}[1]{%
+  {\fontsize{9}{12}\selectfont\bfseries\color{heading}#1}%
+  \par\nointerlineskip\vspace{\sidebarsubheadingsep}%
+}
+
+% Body text environment (8pt / 11pt leading)
+\newcommand{\bodytext}{%
+  \fontsize{8}{11}\selectfont\color{body}%
+}
+
+% Date text: 7pt, muted
+\newcommand{\datetext}[1]{%
+  {\fontsize{7}{9}\selectfont\color{muted}#1}%
+}
+
+% Job entry: title (regular) · company (semibold)  date
+\newcommand{\jobentry}[3]{%
+  {\fontsize{9}{12}\selectfont\color{heading}%
+    #1 \,\textperiodcentered\, \textbf{#2}}%
+  \hspace{5pt}\datetext{#3}%
+  \par\nointerlineskip\vspace{\jobrolesep}%
+}
+
+% Sub-role (e.g. promotion): title (regular)  date
+\newcommand{\subrole}[2]{%
+  {\fontsize{9}{12}\selectfont\color{heading}#1}%
+  \hspace{5pt}\datetext{#2}%
+  \par\nointerlineskip\vspace{\jobrolesep}%
+}
+
+% Last role before bullets (uses roletodesc gap)
+\newcommand{\lastrole}[2]{%
+  {\fontsize{9}{12}\selectfont\color{heading}#1}%
+  \hspace{5pt}\datetext{#2}%
+  \par\nointerlineskip\vspace{\roletodesc}%
+}
+
+% Single job entry (no sub-roles, goes straight to bullets)
+\newcommand{\singlejobentry}[3]{%
+  {\fontsize{9}{12}\selectfont\color{heading}%
+    #1 \,\textperiodcentered\, \textbf{#2}}%
+  \hspace{5pt}\datetext{#3}%
+  \par\nointerlineskip\vspace{\roletodesc}%
+}
+
+% Bullet list for job descriptions
+\newlist{bullets}{itemize}{1}
+\setlist[bullets]{
+  label=\textbullet,
+  leftmargin=12pt,
+  labelsep=4pt,
+  itemsep=\bulletsep,
+  parsep=0pt,
+  topsep=0pt,
+  partopsep=0pt,
+}
+
+% Spacing between job blocks
+\newcommand{\jobsep}{\par\nointerlineskip\vspace{\jobseplen}}
+
+% Spacing between project blocks
+\newcommand{\projectsep}{\par\nointerlineskip\vspace{\projectseplen}}
+
+% Project entry: Name · Type  Year + description paragraph
+\newcommand{\projectentry}[4]{%
+  {\fontsize{9}{12}\selectfont\color{heading}%
+    \textbf{#1} \,\textperiodcentered\, #2}%
+  \hspace{5pt}\datetext{#3}%
+  \par\nointerlineskip\vspace{\projectdesc}%
+  {\bodytext #4\par}%
+}
+
+% ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
+\bodytext
 
-% Print the header with above personal informations
-% Give optional argument to change alignment(C: center, L: left, R: right)
-\makecvheader[C]
+% ── Header ────────────────────────────────────────────────────────────────────
+\input{sections/header}
 
-% Print the footer with 3 arguments(<left>, <center>, <right>)
-% Leave any of these blank if they are not needed
-\makecvfooter
-  {}
-  {Vlad Cuciureanu~~~·~~~Résumé}
-  {\thepage}
+\vspace{\headergap}
 
+% ── Two-column body ───────────────────────────────────────────────────────────
+% ratio = leftcolwidth / (leftcolwidth + rightcolwidth) = 355.6 / 521.4
+\columnratio{0.682}
+\setlength{\columnsep}{\colgap}
 
-%-------------------------------------------------------------------------------
-%	CV/RESUME CONTENT
-%	Each section is imported separately, open each file in turn to modify content
-%-------------------------------------------------------------------------------
-\input{resume/summary.tex}
-\input{resume/experience.tex}
-\newpage
-\input{resume/skills.tex}
-\input{resume/oss.tex}
-\input{resume/recommendations.tex}
-\input{resume/education.tex}
-% \input{resume/presentation.tex}
-% \input{resume/writing.tex}
-% \input{resume/committees.tex}
+\begin{paracol}{2}
+  \raggedright
+  \input{sections/experience}%
 
+  \vspace{\sidebarsectionsep}
+  \input{sections/projects}%
 
-%-------------------------------------------------------------------------------
+  \vspace{\sidebarsectionsep}
+  \input{sections/contributions}%
+
+  \switchcolumn
+  \raggedright
+  \input{sections/skills}%
+
+  \vspace{\sidebarsectionsep}
+  \input{sections/references}%
+
+  \vspace{\sidebarsectionsep}
+  \input{sections/education}%
+
+  \vspace{\sidebarsectionsep}
+  \input{sections/interests}%
+\end{paracol}
+
 \end{document}
