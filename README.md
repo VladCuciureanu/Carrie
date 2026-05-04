@@ -10,11 +10,10 @@ xelatex resume.tex
 
 This will generate the CV as `resume.pdf`.
 
-Alternatively, you can compile it using the provided Dockerfile:
+Alternatively, you can compile it using Docker:
 
 ```sh
-docker build --tag 'vlad.cuciureanu/xelatex' .
-docker run --rm -w /data -v .:/data vlad.cuciureanu/xelatex xelatex resume.tex
+docker run --rm -v "$(pwd):/work" -w /work texlive/texlive latexmk -xelatex resume.tex
 ```
 
 ## License
