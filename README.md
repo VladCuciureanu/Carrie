@@ -2,10 +2,10 @@
 
 ## Getting Started
 
-To compile this CV, ensure you have a TeX distribution installed on your system. Once installed, simply run:
+The repository includes the exact Inter font files used by the CV, so the build does not depend on fonts installed on the host. With a TeX distribution installed, run:
 
 ```sh
-xelatex resume.tex
+lualatex resume.tex
 ```
 
 This will generate the CV as `resume.pdf`.
@@ -13,7 +13,7 @@ This will generate the CV as `resume.pdf`.
 Alternatively, you can compile it using Docker:
 
 ```sh
-docker run --rm -v "$(pwd):/work" -w /work texlive/texlive latexmk -xelatex resume.tex
+docker run --rm -v "$(pwd):/work" -w /work texlive/texlive latexmk -lualatex resume.tex
 ```
 
 ## License

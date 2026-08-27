@@ -1,4 +1,4 @@
-% !TEX program = xelatex
+% !TEX program = lualatex
 \documentclass[letterpaper]{article}
 
 % ── Geometry ──────────────────────────────────────────────────────────────────
@@ -12,14 +12,14 @@
 
 % ── Fonts ─────────────────────────────────────────────────────────────────────
 \usepackage{fontspec}
-\setmainfont{Inter}[
-  RawFeature=+cv11,          % single-story "a"
-  UprightFont=*-Regular,
-  BoldFont=*-SemiBold,        % one step down from Bold
-  ItalicFont=*-Italic,
-  BoldItalicFont=*-SemiBoldItalic,
+\setmainfont{Inter-Regular.ttf}[
+  Path=fonts/inter/,
+  RawFeature={+cv11},  % single-story "a"
+  UprightFont=Inter-Regular.ttf,
+  BoldFont=Inter-SemiBold.ttf,        % one step down from Bold
+  ItalicFont=Inter-Italic.ttf,
+  BoldItalicFont=Inter-SemiBoldItalic.ttf,
 ]
-
 % ── Packages ──────────────────────────────────────────────────────────────────
 \usepackage{xcolor}
 \usepackage{enumitem}
