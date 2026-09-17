@@ -13,7 +13,7 @@ This will generate the CV as `resume.pdf`.
 Alternatively, you can compile it using Docker:
 
 ```sh
-docker run --rm -v "$(pwd):/work" -w /work texlive/texlive latexmk -lualatex resume.tex
+docker run --rm -v "$(pwd):/work" -w /work texlive/texlive latexmk -lualatex resume.tex -output-directory=dist
 ```
 
 ## License

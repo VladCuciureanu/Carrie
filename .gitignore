@@ -1,11 +1,3 @@
-resume.log
-resume.pdf
-resume.aux
-resume.out
-texput.out
+dist
 .herodotus.toml
 .DS_Store
-missfont.log
-resume.fdb_latexmk
-resume.fls
-resume.xdv
