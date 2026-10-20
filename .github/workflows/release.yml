@@ -20,7 +20,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: release-cv
+  # Pull request builds get their own group so they never cancel a queued release.
+  group: release-cv-${{ github.event_name == 'pull_request' && github.ref || 'main' }}
   cancel-in-progress: false
 
 jobs:
@@ -32,6 +33,8 @@ jobs:
       HAS_DISPATCH_TOKEN: ${{ secrets.PORTFOLIO_DISPATCH_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Build PDF
         uses: xu-cheng/latex-action@v4
