@@ -1,6 +1,6 @@
 # Carrie
 
-Vlad Cuciureanu's CV, typeset in LaTeX and set in Inter.
+Vlad Cuciureanu's CV, written in LaTeX with the Inter typeface.
 
 The output is a US Letter, two-column CV: a name and contact header, then experience, personal projects and open source contributions on the left, and skills, references, education and interests on the right.
 
@@ -9,7 +9,7 @@ The output is a US Letter, two-column CV: a name and contact header, then experi
 - A TeX distribution with LuaLaTeX (TeX Live or MiKTeX).
 - The packages `fontspec`, `geometry`, `xcolor`, `enumitem`, `hyperref`, `paracol` and `microtype`. A full TeX Live install has all of them.
 
-`resume.tex` uses `fontspec`, so pdfLaTeX will not work, and it declares `% !TEX program = lualatex`. The Inter fonts are bundled in `fonts/inter/`, so nothing needs to be installed system-wide.
+`resume.tex` uses `fontspec`, so pdfLaTeX won't work; its `% !TEX program = lualatex` comment makes editors pick LuaLaTeX. The Inter fonts are bundled in `fonts/inter/`, so nothing needs to be installed system-wide.
 
 ## Build
 
@@ -46,7 +46,7 @@ This writes `dist/resume.pdf`. `dist/` is git-ignored.
 
 To change the order of sections, edit the `\input` lines inside the `paracol` environment in `resume.tex`.
 
-The MIT license covers the template and code, the CV content itself is personal, and the bundled Inter fonts keep their own license (`fonts/inter/LICENSE.txt`).
+The bundled Inter fonts keep their own license (`fonts/inter/LICENSE.txt`).
 
 ## License
 
