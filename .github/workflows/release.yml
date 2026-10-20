@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Set when the PORTFOLIO_DISPATCH_TOKEN secret exists; without it the
-      # portfolio picks up the release on its daily schedule instead.
+      # portfolio isn't notified and its Update CV workflow must be run by hand.
       HAS_DISPATCH_TOKEN: ${{ secrets.PORTFOLIO_DISPATCH_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v7
