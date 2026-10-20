@@ -1,0 +1,86 @@
+name: Build and release CV
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - resume.tex
+      - sections/**
+      - fonts/**
+      - .github/workflows/release.yml
+  pull_request:
+    paths:
+      - resume.tex
+      - sections/**
+      - fonts/**
+      - .github/workflows/release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-cv
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # Set when the PORTFOLIO_DISPATCH_TOKEN secret exists; without it the
+      # portfolio picks up the release on its daily schedule instead.
+      HAS_DISPATCH_TOKEN: ${{ secrets.PORTFOLIO_DISPATCH_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build PDF
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: resume.tex
+          latexmk_use_lualatex: true
+
+      - name: Upload PDF (pull requests)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: resume
+          path: resume.pdf
+
+      - name: Publish release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          date=$(date -u +%Y-%m-%d)
+          tag="cv-${date}-${GITHUB_SHA::7}"
+          echo "TAG=$tag" >> "$GITHUB_ENV"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" resume.pdf --clobber
+          else
+            gh release create "$tag" resume.pdf \
+              --title "CV ${date}" \
+              --notes "Built from ${GITHUB_SHA}." \
+              --target "$GITHUB_SHA" \
+              --latest
+          fi
+
+      - name: Delete older releases
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release list --limit 1000 --json tagName --jq '.[].tagName' |
+            while read -r old; do
+              if [ "$old" != "$TAG" ]; then
+                gh release delete "$old" --cleanup-tag --yes
+              fi
+            done
+
+      - name: Notify portfolio
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && env.HAS_DISPATCH_TOKEN == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PORTFOLIO_DISPATCH_TOKEN }}
+        run: |
+          gh api --method POST repos/VladCuciureanu/portfolio/dispatches \
+            -f event_type=cv-released \
+            -f "client_payload[tag]=$TAG"

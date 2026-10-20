@@ -29,6 +29,10 @@ docker run --rm -v "$(pwd):/work" -w /work texlive/texlive latexmk -lualatex -ou
 
 This writes `dist/resume.pdf`. `dist/` is git-ignored.
 
+## Releases
+
+Every change to the CV on `main` is built by CI and published as a GitHub Release with `resume.pdf` attached. Older releases are deleted, so the [latest release](https://github.com/VladCuciureanu/Carrie/releases/latest) is the only one. Pull requests build the PDF as a workflow artifact without releasing it.
+
 ## Layout
 
 `resume.tex` holds the page geometry, font setup, colours, spacing and the layout macros (`\jobentry`, `\projectentry`, `\rsidebarsection` and so on). It pulls in the content from `sections/`:
