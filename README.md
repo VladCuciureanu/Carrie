@@ -1,6 +1,6 @@
 # Carrie
 
-Vlad Cuciureanu's CV, written in LaTeX with the Inter typeface.
+My's CV, written in LaTeX with the Inter typeface.
 
 The output is a US Letter, two-column CV: a name and contact header, then experience, personal projects and open source contributions on the left, and skills, references, education and interests on the right.
 
